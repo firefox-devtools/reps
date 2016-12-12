@@ -4,7 +4,8 @@
   "description": "Devtools Reps",
   "main": "index.js",
   "scripts": {
-    "start": "node bin/dev-server.js"
+    "start": "node bin/dev-server.js",
+    "mochitests-watch": "MOCHITESTS=true webpack --watch",
   },
   "author": "",
   "license": "ISC",
@@ -14,6 +15,7 @@
   },
   "dependencies": {
     "devtools-config": "0.0.10",
-    "devtools-local-toolbox": "0.0.11"
+    "devtools-local-toolbox": "0.0.12",
+    "webpack": "^1.14.0"
   }
 }
