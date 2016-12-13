@@ -16,6 +16,7 @@
   "dependencies": {
     "devtools-config": "0.0.10",
     "devtools-local-toolbox": "0.0.12",
-    "webpack": "^1.14.0"
+    "webpack": "^1.14.0",
+    "lodash": "^4.17.2"
   }
 }
