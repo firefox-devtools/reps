@@ -1,0 +1,13 @@
+#!/bin/sh
+
+node_modules/.bin/webpack
+
+docker run -it \
+  -v `pwd`/assets/build/bundle.js:/firefox/devtools/client/debugger/new/bundle.js \
+  -v `pwd`/assets/build/styles.css:/firefox/devtools/client/debugger/new/styles.css \
+  -v `pwd`/src/test/mochitest:/firefox/devtools/client/debugger/new/test/mochitest \
+  -v "/tmp/.X11-unix:/tmp/.X11-unix:rw" \
+  -e "DISPLAY=unix$DISPLAY" \
+  --ipc host \
+  jlongster/mochitest-runner \
+  /bin/bash -c "export SHELL=/bin/bash; touch devtools/client/debugger/new/test/mochitest/browser.ini && ./mach mochitest --subsuite devtools devtools/client/debugger/new/test/mochitest/"
