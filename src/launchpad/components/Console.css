@@ -1,0 +1,38 @@
+
+.results {
+  padding: 2em 1em;
+}
+
+.rep-input {
+  font-family: monospace;
+  background-color: var(--theme-toolbar-background-alt);
+  color: var(--theme-body-color);
+  padding: 0.5rem;
+}
+
+.rep-input:before {
+  content: "➜ ";
+}
+
+.reps {
+  display: flex;
+  flex-wrap: wrap;
+  border: 1px solid var(--theme-splitter-color);
+  padding: 1rem 0;
+  margin-bottom: 0.5rem;
+}
+
+.rep-element {
+  margin-left: 10px;
+}
+
+.rep-element::before {
+  content: attr(data-mode) ":";
+  background-color: var(--theme-toolbar-background);;
+  font-family: monospace;
+  display: inline-block;
+  font-size: 0.75rem;
+  padding: 0.1rem 0.25rem;
+  margin-right: 0.25rem;
+  border-radius: 0.25rem;
+}

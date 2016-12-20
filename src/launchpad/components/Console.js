@@ -1,11 +1,15 @@
 const React = require("react");
 const { DOM: dom, PropTypes, createFactory } = React;
 
+const Header = createFactory(require("./header"));
+
 const { MODE } = require("../../reps/constants");
 const Rep = createFactory(require("../../reps/rep"));
 const Grip = require("../../reps/grip");
 
-Console = React.createClass({
+require("./Console.css");
+
+const Console = React.createClass({
   getInitialState: function () {
     return {
       expressions: []
@@ -16,24 +20,21 @@ Console = React.createClass({
     client: PropTypes.object.isRequired
   },
 
-  onSubmitForm: function (e) {
-    e.preventDefault();
-    let data = new FormData(e.target);
-    let expression = data.get("expression");
+  evaluate(expression) {
     this.props.client.clientCommands.evaluate(expression, {})
-      .then(result => {
-        this.setState(function (prevState, props) {
-          return {
-            expressions: [{
-              input: expression,
-              packet: result,
-            }, ...prevState.expressions]
-          };
-        });
-      })
+      .then(result => this.addExpression(expression, result))
       .catch(e => {
         console.warn("Error when evaluating", e);
       });
+  },
+
+  addExpression(expression, result) {
+    this.setState(prevState => ({
+      expressions: [{
+        input: expression,
+        packet: result,
+      }, ...prevState.expressions]
+    }));
   },
 
   renderRepInAllModes: function ({object}) {
@@ -53,31 +54,24 @@ Console = React.createClass({
     );
   },
 
+  renderResult(expression) {
+    const object = expression.packet.exception || expression.packet.result;
+    return dom.div(
+      {
+        className: "rep-row",
+        key: JSON.stringify(expression)
+      },
+      dom.div({className: "rep-input"}, expression.input),
+      dom.div({className: "reps"}, this.renderRepInAllModes({ object }))
+    );
+  },
+
   render: function () {
     return dom.main({},
-      dom.form({
-        onSubmit: this.onSubmitForm,
-      },
-        dom.input({
-          type: "text",
-          placeholder: "Enter an expression",
-          name: "expression"
-        })
-      ),
-      dom.div({className: "results"},
-        this.state.expressions.map(expression =>
-          dom.div({
-            className: "rep-row",
-            key: JSON.stringify(expression)
-          },
-            dom.div({className: "rep-input"}, expression.input),
-            dom.div({className: "reps"},
-              this.renderRepInAllModes({
-                object: expression.packet.exception || expression.packet.result
-              })
-            )
-          )
-        )
+      Header({ evaluate: this.evaluate }),
+      dom.div(
+        { className: "results" },
+        this.state.expressions.map(this.renderResult)
       )
     );
   }
