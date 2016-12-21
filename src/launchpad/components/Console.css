@@ -1,6 +1,18 @@
+main {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
 
-.results {
+.expressions {
   padding: 2em 1em;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.rep-row {
+  border: 1px solid var(--theme-splitter-color);
+  margin-bottom: 1em;
 }
 
 .rep-input {
@@ -17,7 +29,6 @@
 .reps {
   display: flex;
   flex-wrap: wrap;
-  border: 1px solid var(--theme-splitter-color);
   padding: 1rem 0;
   margin-bottom: 0.5rem;
 }
