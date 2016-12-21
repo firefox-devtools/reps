@@ -1,7 +1,6 @@
 const React = require("react");
-const { DOM: dom, PropTypes, createFactory } = React;
+const { createFactory } = React;
 
-const { bindActionCreators, combineReducers } = require("redux");
 const ReactDOM = require("react-dom");
 
 const RepsConsole = createFactory(require("./components/Console"));
@@ -10,20 +9,20 @@ const RepsConsole = createFactory(require("./components/Console"));
 require("../reps.css");
 require("./launchpad.css");
 
-const { renderRoot, bootstrap, L10N } = require("devtools-launchpad");
-const { getValue, isFirefoxPanel } = require("devtools-config");
+const { bootstrap, L10N } = require("devtools-launchpad");
+const { isFirefoxPanel } = require("devtools-config");
 
 if (!isFirefoxPanel()) {
   L10N.setBundle(require("../strings.js"));
   window.l10n = L10N;
 }
 
-function onConnect({client} = {}) {
+function onConnect({ client } = {}) {
   if (!client) {
     return;
   }
 
-  ReactDOM.render(RepsConsole({client}), root);
+  ReactDOM.render(RepsConsole({ client }), root);
 }
 
 let root = document.createElement("div");

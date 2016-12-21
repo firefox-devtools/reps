@@ -10,14 +10,16 @@ const Grip = require("../../reps/grip");
 require("./Console.css");
 
 const Console = React.createClass({
-  getInitialState: function () {
+  propTypes: {
+    client: PropTypes.object.isRequired
+  },
+
+  displayName: "Console",
+
+  getInitialState: function() {
     return {
       expressions: []
     };
-  },
-
-  propTypes: {
-    client: PropTypes.object.isRequired
   },
 
   evaluate(expression) {
@@ -37,13 +39,13 @@ const Console = React.createClass({
     }));
   },
 
-  renderRepInAllModes: function ({object}) {
+  renderRepInAllModes: function({ object }) {
     return Object.keys(MODE).map(modeKey =>
        this.renderRep({ object, modeKey })
      );
   },
 
-  renderRep: function ({ object, modeKey }) {
+  renderRep: function({ object, modeKey }) {
     return dom.div(
       {
         className: `rep-element ${modeKey}`,
@@ -61,12 +63,12 @@ const Console = React.createClass({
         className: "rep-row",
         key: JSON.stringify(expression)
       },
-      dom.div({className: "rep-input"}, expression.input),
-      dom.div({className: "reps"}, this.renderRepInAllModes({ object }))
+      dom.div({ className: "rep-input" }, expression.input),
+      dom.div({ className: "reps" }, this.renderRepInAllModes({ object }))
     );
   },
 
-  render: function () {
+  render: function() {
     return dom.main({},
       Header({ evaluate: this.evaluate }),
       dom.div(

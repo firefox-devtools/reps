@@ -1,20 +1,20 @@
 const React = require("react");
-const { DOM: dom, PropTypes, createFactory } = React;
+const { DOM: dom, PropTypes } = React;
 
 require("./Header.css");
 
 const expressions = {
   array: [
-    `x = [1, "2", {three: 3}, []]`,
-    `x = []`
+    "x = [1, \"2\", {three: 3}, []]",
+    "x = []"
   ],
 
   object: [
-    `x = {a: 2}`
+    "x = {a: 2}"
   ],
 
   function: [
-    `x = () => { 2 }`
+    "x = () => { 2 }"
   ],
 
   yolo: [
@@ -23,6 +23,13 @@ const expressions = {
 };
 
 const Header = React.createClass({
+
+  propTypes: {
+    evaluate: PropTypes.function
+  },
+
+  displayName: "Header",
+
   evaluateExpressions(label) {
     expressions[label].forEach(
       expression => this.props.evaluate(expression)
@@ -39,7 +46,7 @@ const Header = React.createClass({
     ));
   },
 
-  onSubmitForm: function (e) {
+  onSubmitForm: function(e) {
     e.preventDefault();
     let data = new FormData(e.target);
     let expression = data.get("expression");
@@ -60,7 +67,7 @@ const Header = React.createClass({
         })
       ),
       dom.div(
-        {className: "quick-links"},
+        { className: "quick-links" },
         this.renderLinks()
       )
     );
