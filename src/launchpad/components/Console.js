@@ -1,7 +1,7 @@
 const React = require("react");
 const { DOM: dom, PropTypes, createFactory } = React;
 
-const Header = createFactory(require("./header"));
+const Header = createFactory(require("./Header"));
 
 const { MODE } = require("../../reps/constants");
 const Rep = createFactory(require("../../reps/rep"));
