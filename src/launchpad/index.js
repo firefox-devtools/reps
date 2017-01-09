@@ -1,15 +1,16 @@
 // require("./webconsole.css")
 require("../reps/reps.css");
 
+const React = require("react");
+const ReactDOM = require("react-dom");
+const { createFactory } = React;
+
 const { bootstrap, L10N } = require("devtools-launchpad");
 const { isFirefoxPanel } = require("devtools-config");
 
 if (!isFirefoxPanel()) {
-  const React = require("react");
-  const ReactDOM = require("react-dom");
   const { Provider } = require("react-redux");
 
-  const { createFactory } = React;
   const RepsConsole = createFactory(require("./components/Console"));
   const { configureStore } = require("./store");
 
@@ -51,10 +52,12 @@ if (!isFirefoxPanel()) {
   const { MODE } = require("../reps/constants");
   const Rep = createFactory(require("../reps/rep"));
   const Grip = require("../reps/grip");
+  const repUtils = require("./utils/utils");
 
   module.exports = {
     Rep,
     Grip,
+    repUtils,
     MODE
   };
 }
