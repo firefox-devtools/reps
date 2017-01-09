@@ -18,6 +18,10 @@ let webpackConfig = {
 };
 
 if (isFirefoxPanel()) {
+  // Just use the entrypoint in the panel
+  webpackConfig.entry.reps = path.join(projectPath, "index.js");
+
+  // export via commonjs2 `module.exports`
   webpackConfig.output.libraryTarget = "commonjs2";
 }
 
