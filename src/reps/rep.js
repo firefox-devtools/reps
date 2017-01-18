@@ -152,6 +152,7 @@ module.exports = {
     NaNRep,
     Null,
     Number,
+    Obj,
     ObjectWithText,
     ObjectWithURL,
     PromiseRep,
