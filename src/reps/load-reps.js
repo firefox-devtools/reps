@@ -19,7 +19,7 @@ define(function (require, exports, module) {
   let useRepsBundle = false;
   if (useRepsBundle) {
     const bundle = require("devtools/client/shared/components/reps/reps");
-    const { createFactory } = require("devtools/client/shared/vendor/react");
+    const { createFactory } = require("react");
     Rep = createFactory(bundle.Rep);
     StringRep = createFactory(bundle.StringRep);
     Grip = createFactory(bundle.Grip);
