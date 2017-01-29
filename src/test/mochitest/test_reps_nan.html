@@ -19,10 +19,10 @@ Test NaN rep
 "use strict";
 
 window.onload = Task.async(function* () {
-  const { REPS } = browserRequire("devtools/client/shared/components/reps/load-reps");
-  let { Rep, NaNRep } = REPS;
-
   try {
+    const { REPS } = browserRequire("devtools/client/shared/components/reps/load-reps");
+    let { Rep, NaNRep } = REPS;
+
     yield testNaN();
   } catch (e) {
     ok(false, "Got an error: " + DevToolsUtils.safeErrorString(e));

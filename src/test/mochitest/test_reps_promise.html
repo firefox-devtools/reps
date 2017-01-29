@@ -19,12 +19,12 @@ Test Promise rep
 "use strict";
 
 window.onload = Task.async(function* () {
-  const { REPS, MODE } = browserRequire("devtools/client/shared/components/reps/load-reps");
-  let { Rep, PromiseRep } = REPS;
-
-  const componentUnderTest = PromiseRep;
-
   try {
+    const { REPS, MODE } = browserRequire("devtools/client/shared/components/reps/load-reps");
+    let { Rep, PromiseRep } = REPS;
+
+    const componentUnderTest = PromiseRep;
+
     yield testPending();
     yield testFulfilledWithNumber();
     yield testFulfilledWithString();

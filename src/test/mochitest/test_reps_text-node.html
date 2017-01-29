@@ -19,26 +19,26 @@ Test text-node rep
 "use strict";
 
 window.onload = Task.async(function* () {
-  const { REPS, MODE } = browserRequire("devtools/client/shared/components/reps/load-reps");
-  let { Rep, TextNode } = REPS;
-
-  let gripStubs = new Map();
-  gripStubs.set("testRendering", {
-    "class": "Text",
-    "actor": "server1.conn1.child1/obj50",
-    "preview": {
-      "textContent": "hello world"
-    }
-  });
-  gripStubs.set("testRenderingWithEOL", {
-    "class": "Text",
-    "actor": "server1.conn1.child1/obj50",
-    "preview": {
-      "textContent": "hello\nworld"
-    }
-  });
-
   try {
+    const { REPS, MODE } = browserRequire("devtools/client/shared/components/reps/load-reps");
+    let { Rep, TextNode } = REPS;
+
+    let gripStubs = new Map();
+    gripStubs.set("testRendering", {
+      "class": "Text",
+      "actor": "server1.conn1.child1/obj50",
+      "preview": {
+        "textContent": "hello world"
+      }
+    });
+    gripStubs.set("testRenderingWithEOL", {
+      "class": "Text",
+      "actor": "server1.conn1.child1/obj50",
+      "preview": {
+        "textContent": "hello\nworld"
+      }
+    });
+
     // Test that correct rep is chosen
     const renderedRep = shallowRenderComponent(Rep, {
       object: gripStubs.get("testRendering")

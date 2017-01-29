@@ -19,12 +19,12 @@ Test GripMap rep
 "use strict";
 
 window.onload = Task.async(function* () {
-  const { REPS, MODE } = browserRequire("devtools/client/shared/components/reps/load-reps");
-  let { Rep, GripMap } = REPS;
-
-  const componentUnderTest = GripMap;
-
   try {
+    const { REPS, MODE } = browserRequire("devtools/client/shared/components/reps/load-reps");
+    let { Rep, GripMap } = REPS;
+
+    const componentUnderTest = GripMap;
+
     yield testEmptyMap();
     yield testSymbolKeyedMap();
     yield testWeakMap();

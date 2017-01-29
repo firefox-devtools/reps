@@ -17,12 +17,12 @@ Test Func rep
 <script src="head.js" type="application/javascript;version=1.8"></script>
 <script type="application/javascript;version=1.8">
 window.onload = Task.async(function* () {
-  const { REPS } = browserRequire("devtools/client/shared/components/reps/load-reps");
-  let { Rep, Func } = REPS;
-
-  const componentUnderTest = Func;
-
   try {
+    const { REPS } = browserRequire("devtools/client/shared/components/reps/load-reps");
+    let { Rep, Func } = REPS;
+
+    const componentUnderTest = Func;
+
     // Test that correct rep is chosen
     const gripStub = getGripStub("testNamed");
     const renderedRep = shallowRenderComponent(Rep, { object: gripStub });

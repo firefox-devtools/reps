@@ -20,19 +20,19 @@ Test Symbol rep
 /* import-globals-from head.js */
 
 window.onload = Task.async(function* () {
-  const { REPS } = browserRequire("devtools/client/shared/components/reps/load-reps");
-  let { Rep, SymbolRep } = REPS;
-
-  let gripStubs = new Map();
-  gripStubs.set("testSymbolFoo", {
-    type: "symbol",
-    name: "foo"
-  });
-  gripStubs.set("testSymbolWithoutIdentifier", {
-    type: "symbol"
-  });
-
   try {
+    const { REPS } = browserRequire("devtools/client/shared/components/reps/load-reps");
+    let { Rep, SymbolRep } = REPS;
+
+    let gripStubs = new Map();
+    gripStubs.set("testSymbolFoo", {
+      type: "symbol",
+      name: "foo"
+    });
+    gripStubs.set("testSymbolWithoutIdentifier", {
+      type: "symbol"
+    });
+
     // Test that correct rep is chosen
     const renderedRep = shallowRenderComponent(
       Rep,
