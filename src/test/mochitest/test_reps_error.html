@@ -19,10 +19,10 @@ Test Error rep
 "use strict";
 
 window.onload = Task.async(function* () {
-  const { REPS, MODE } = browserRequire("devtools/client/shared/components/reps/load-reps");
-  let { Rep, ErrorRep } = REPS;
-
   try {
+    const { REPS, MODE } = browserRequire("devtools/client/shared/components/reps/load-reps");
+    let { Rep, ErrorRep } = REPS;
+
     // Test errors with different properties
     yield testSimpleError();
     yield testMultilineStackError();

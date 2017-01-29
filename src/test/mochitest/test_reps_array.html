@@ -20,16 +20,16 @@ Test ArrayRep rep
 /* import-globals-from head.js */
 
 window.onload = Task.async(function* () {
-  const { REPS, MODE } = browserRequire("devtools/client/shared/components/reps/load-reps");
-  let { Rep, ArrayRep } = REPS;
-
-  let componentUnderTest = ArrayRep;
-  const maxLength = {
-    short: 3,
-    long: 10
-  };
-
   try {
+    const { REPS, MODE } = browserRequire("devtools/client/shared/components/reps/load-reps");
+    let { Rep, ArrayRep } = REPS;
+
+    let componentUnderTest = ArrayRep;
+    const maxLength = {
+      short: 3,
+      long: 10
+    };
+
     yield testBasic();
 
     // Test property iterator

@@ -19,10 +19,10 @@ Test Element node rep
 "use strict";
 
 window.onload = Task.async(function* () {
-  const { REPS, MODE } = browserRequire("devtools/client/shared/components/reps/load-reps");
-  let { Rep, ElementNode } = REPS;
-
   try {
+    const { REPS, MODE } = browserRequire("devtools/client/shared/components/reps/load-reps");
+    let { Rep, ElementNode } = REPS;
+
     yield testBodyNode();
     yield testDocumentElement();
     yield testNode();
