@@ -1,48 +1,37 @@
-/* -*- indent-tabs-mode: nil; js-indent-level: 2 -*- */
-/* vim: set ft=javascript ts=2 et sw=2 tw=80: */
-/* This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+// Dependencies
+const React = require("react");
 
-"use strict";
+const { wrapRender } = require("./rep-utils");
 
-// Make this available to both AMD and CJS environments
-define(function (require, exports, module) {
-  // Dependencies
-  const React = require("devtools/client/shared/vendor/react");
+// Shortcuts
+const { span } = React.DOM;
 
-  const { wrapRender } = require("./rep-utils");
+/**
+ * Renders undefined value
+ */
+const Undefined = React.createClass({
+  displayName: "UndefinedRep",
 
-  // Shortcuts
-  const { span } = React.DOM;
+  render: wrapRender(function () {
+    return (
+      span({className: "objectBox objectBox-undefined"},
+        "undefined"
+      )
+    );
+  }),
+});
 
-  /**
-   * Renders undefined value
-   */
-  const Undefined = React.createClass({
-    displayName: "UndefinedRep",
-
-    render: wrapRender(function () {
-      return (
-        span({className: "objectBox objectBox-undefined"},
-          "undefined"
-        )
-      );
-    }),
-  });
-
-  function supportsObject(object, type) {
-    if (object && object.type && object.type == "undefined") {
-      return true;
-    }
-
-    return (type == "undefined");
+function supportsObject(object, type) {
+  if (object && object.type && object.type == "undefined") {
+    return true;
   }
 
-  // Exports from this module
+  return (type == "undefined");
+}
 
-  exports.Undefined = {
-    rep: Undefined,
-    supportsObject: supportsObject
-  };
-});
+// Exports from this module
+
+module.exports = {
+  rep: Undefined,
+  supportsObject: supportsObject
+};

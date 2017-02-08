@@ -1,60 +1,49 @@
-/* -*- indent-tabs-mode: nil; js-indent-level: 2 -*- */
-/* vim: set ft=javascript ts=2 et sw=2 tw=80: */
-/* This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+// Dependencies
+const React = require("react");
 
-"use strict";
+const { wrapRender } = require("./rep-utils");
 
-// Make this available to both AMD and CJS environments
-define(function (require, exports, module) {
-  // Dependencies
-  const React = require("devtools/client/shared/vendor/react");
+// Shortcuts
+const { span } = React.DOM;
 
-  const { wrapRender } = require("./rep-utils");
+/**
+ * Renders a number
+ */
+const Number = React.createClass({
+  displayName: "Number",
 
-  // Shortcuts
-  const { span } = React.DOM;
+  propTypes: {
+    object: React.PropTypes.oneOfType([
+      React.PropTypes.object,
+      React.PropTypes.number,
+    ]).isRequired
+  },
 
-  /**
-   * Renders a number
-   */
-  const Number = React.createClass({
-    displayName: "Number",
+  stringify: function (object) {
+    let isNegativeZero = Object.is(object, -0) ||
+      (object.type && object.type == "-0");
 
-    propTypes: {
-      object: React.PropTypes.oneOfType([
-        React.PropTypes.object,
-        React.PropTypes.number,
-      ]).isRequired
-    },
+    return (isNegativeZero ? "-0" : String(object));
+  },
 
-    stringify: function (object) {
-      let isNegativeZero = Object.is(object, -0) ||
-        (object.type && object.type == "-0");
+  render: wrapRender(function () {
+    let value = this.props.object;
 
-      return (isNegativeZero ? "-0" : String(object));
-    },
-
-    render: wrapRender(function () {
-      let value = this.props.object;
-
-      return (
-        span({className: "objectBox objectBox-number"},
-          this.stringify(value)
-        )
-      );
-    })
-  });
-
-  function supportsObject(object, type) {
-    return ["boolean", "number", "-0"].includes(type);
-  }
-
-  // Exports from this module
-
-  exports.Number = {
-    rep: Number,
-    supportsObject: supportsObject
-  };
+    return (
+      span({className: "objectBox objectBox-number"},
+        this.stringify(value)
+      )
+    );
+  })
 });
+
+function supportsObject(object, type) {
+  return ["boolean", "number", "-0"].includes(type);
+}
+
+// Exports from this module
+
+module.exports = {
+  rep: Number,
+  supportsObject: supportsObject
+};
