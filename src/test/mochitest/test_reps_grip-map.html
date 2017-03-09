@@ -364,7 +364,7 @@ window.onload = Task.async(function* () {
       onInspectIconClick,
       attachedActorIds: [],
     });
-    is(renderedComponentWithoutInspectIcon.querySelector(".open-inspector"), null,
+    is(renderedComponentWithoutInspectIcon.querySelector(".command-pick"), null,
       "There isn't an inspect icon when the actor is not in attachedActorIds");
 
     info("Testing onInspectIconClick on node valued Map");
@@ -374,7 +374,7 @@ window.onload = Task.async(function* () {
       attachedActorIds: valuesattachedActorIds,
     });
 
-    let icons = nodeValuedRenderedComponent.querySelectorAll(".open-inspector");
+    let icons = nodeValuedRenderedComponent.querySelectorAll(".command-pick");
     is(icons.length, valuesGrips.length,
       "There is an icon for each map value with a matching attachedNodeFront");
 
@@ -391,7 +391,7 @@ window.onload = Task.async(function* () {
       attachedActorIds: keysAttachedActorIds,
     });
 
-    icons = nodeKeyedRenderedComponent.querySelectorAll(".open-inspector");
+    icons = nodeKeyedRenderedComponent.querySelectorAll(".command-pick");
     is(icons.length, keysGrips.length,
       "There is an icon for each map key with a matching attachedNodeFront");
 

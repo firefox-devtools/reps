@@ -123,7 +123,7 @@ const ElementNode = React.createClass({
       }
 
       if (onInspectIconClick) {
-        inspectIcon = Svg("open-inspector", {
+        inspectIcon = Svg("command-pick", {
           element: "a",
           draggable: false,
           // TODO: Localize this with "openNodeInInspector" when Bug 1317038 lands

@@ -394,7 +394,7 @@ window.onload = Task.async(function* () {
       onInspectIconClick,
       attachedActorIds: ["someOtherId"],
     });
-    is(renderedComponentWithoutInspectIcon.querySelector(".open-inspector"), null,
+    is(renderedComponentWithoutInspectIcon.querySelector(".command-pick"), null,
       "There isn't an inspect icon when the actor is not in attachedActorIds");
 
     const renderedComponent = renderComponent(GripArray.rep, {
@@ -403,7 +403,7 @@ window.onload = Task.async(function* () {
       attachedActorIds,
     });
 
-    const icons = renderedComponent.querySelectorAll(".open-inspector");
+    const icons = renderedComponent.querySelectorAll(".command-pick");
     is(icons.length, grips.length,
       "There is an icon for each grip array item with a matching attachedNodeFront");
 
