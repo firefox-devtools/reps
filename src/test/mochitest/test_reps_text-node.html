@@ -186,7 +186,7 @@ window.onload = Task.async(function* () {
       onInspectIconClick,
       attachedActorIds: ["someOtherId"]
     });
-    is(renderedComponentWithoutInspectIcon.querySelector(".open-inspector"), null,
+    is(renderedComponentWithoutInspectIcon.querySelector(".command-pick"), null,
       "There isn't an inspect icon when the actor is not in attachedActorIds");
 
     const renderedComponent = renderComponent(TextNode.rep, {
@@ -195,7 +195,7 @@ window.onload = Task.async(function* () {
       attachedActorIds,
     });
 
-    const inspectIconNode = renderedComponent.querySelector(".open-inspector");
+    const inspectIconNode = renderedComponent.querySelector(".command-pick");
     ok(inspectIconNode !== null, "There is an inspect icon as expected");
     TestUtils.Simulate.click(inspectIconNode);
 

@@ -188,10 +188,10 @@ window.onload = Task.async(function* () {
       onInspectIconClick,
       attachedActorIds: ["someOtherId"]
     });
-    is(renderedComponentWithoutInspectIcon.querySelector(".open-inspector"), null,
+    is(renderedComponentWithoutInspectIcon.querySelector(".command-pick"), null,
       "There isn't an inspect icon when the actor is not in attachedActorIds");
 
-    is(renderedComponentWithoutInspectIcon.querySelector(".open-inspector"), null,
+    is(renderedComponentWithoutInspectIcon.querySelector(".command-pick"), null,
       "There isn't an inspect icon when attachedActorIds does not have keys " +
       "matching grip event's target item");
 
@@ -201,7 +201,7 @@ window.onload = Task.async(function* () {
       attachedActorIds
     });
 
-    const icon = renderedComponent.querySelector(".open-inspector");
+    const icon = renderedComponent.querySelector(".command-pick");
     ok(icon !== null, "There is an icon as expected when passing a matching " +
       "attachedActorIds item");
 

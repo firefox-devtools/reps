@@ -185,17 +185,17 @@
 /******************************************************************************/
 /* Open DOMNode in inspector button */
 
-.open-inspector svg {
+.command-pick svg {
   fill: rgb(215, 215, 215);
-  height: 16px;
-  width: 16px;
+  height: 14px;
+  width: 14px;
   margin-left: .25em;
   cursor: pointer;
-  vertical-align: middle;
+  vertical-align: sub;
 }
 
-.objectBox-node:hover .open-inspector svg,
-.objectBox-textNode:hover .open-inspector svg,
-.open-inspector svg:hover {
+.objectBox-node:hover .command-pick svg,
+.objectBox-textNode:hover .command-pick svg,
+.command-pick svg:hover {
   fill: rgb(65, 175, 230);
 }
