@@ -1,3 +1,4 @@
+const {makeNodesForProperties, isPromise, getPromiseProperties} = require("../utils");
 const expect = require("expect.js");
 
 const {

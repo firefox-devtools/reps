@@ -1,8 +1,11 @@
 const React = require("react");
 const InlineSVG = require("svg-inline-react");
 
+require("./Svg.css");
+
 const svg = {
   "open-inspector": require("./open-inspector.svg"),
+  "arrow": require("./arrow.svg"),
 };
 
 module.exports = function(name, props) { // eslint-disable-line

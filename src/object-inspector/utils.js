@@ -1,5 +1,5 @@
 const get = require("lodash/get");
-const { maybeEscapePropertyName } = require("devtools-reps");
+const {maybeEscapePropertyName} = require("../reps/rep-utils");
 
 let WINDOW_PROPERTIES = {};
 
