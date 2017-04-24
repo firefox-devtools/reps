@@ -24,6 +24,9 @@
     "node": ">=6.9.0"
   },
   "dependencies": {
+    "expect.js": "^0.3.1",
+    "geckodriver": "1.4",
+    "jest": "^19.0.2",
     "lodash": "^4.17.2",
     "svg-inline-react": "^1.0.2"
   },
@@ -33,5 +36,23 @@
     "eslint": "^3.12.0",
     "eslint-plugin-mozilla": "0.2.3",
     "fs-extra": "^2.0.0"
+  },
+  "jest": {
+    "rootDir": "src",
+    "testMatch": [
+      "**/tests/**/*.js"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "<rootDir>/test/",
+      "<rootDir>/utils/tests/fixtures/"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!devtools-)"
+    ],
+    "moduleNameMapper": {
+      "\\.css$": "<rootDir>/test/__mocks__/styleMock.js",
+      "\\.svg$": "<rootDir>/test/__mocks__/svgMock.js"
+    }
   }
 }

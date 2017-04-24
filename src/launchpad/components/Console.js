@@ -42,6 +42,7 @@ const Console = React.createClass({
       hideResultPacket,
       navigateInputHistory,
       showResultPacket,
+      loadObjectProperties
     } = this.props;
 
     return dom.main({},
@@ -57,6 +58,7 @@ const Console = React.createClass({
         expressions: expressions.reverse(),
         hideResultPacket,
         showResultPacket,
+        loadObjectProperties
       })
     );
   }

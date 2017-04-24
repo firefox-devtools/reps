@@ -7,6 +7,7 @@ const { DOM: dom, PropTypes, createFactory } = React;
 
 const { MODE } = require("../../reps/constants");
 const Rep = createFactory(require("../../reps/rep").Rep);
+const ObjectInspector = createFactory(require("../../object-inspector"));
 const Grip = require("../../reps/grip");
 
 const Result = React.createClass({
@@ -44,6 +45,10 @@ const Result = React.createClass({
      );
   },
 
+  renderFoo: function({ object }) {
+    return this.renderOI({object});
+  },
+
   renderRep: function ({ object, modeKey }) {
     return dom.div(
       {
@@ -56,6 +61,32 @@ const Result = React.createClass({
         defaultRep: Grip,
         mode: MODE[modeKey],
         onInspectIconClick: nodeFront => console.log("inspectIcon click", nodeFront),
+      })
+    );
+  },
+
+  renderOI: function ({object}) {
+    const { loadObjectProperties } = this.props;
+    const loadedObjects = {};
+    const getObjectProperties = id => {};
+    // const roots = this.getChildren(root, getObjectProperties);
+    const roots = [{
+      name: 'foo',
+      path: 'foo',
+      contents: {value: object}
+    }];
+    return dom.div(
+      {
+        className: `rep-element`,
+        key: JSON.stringify(object)
+      },
+      ObjectInspector({
+        roots,
+        getObjectProperties,
+        autoExpandDepth: 0,
+        onDoubleClick: () => {},
+        loadObjectProperties,
+        getActors: () => ({})
       })
     );
   },
@@ -87,7 +118,7 @@ const Result = React.createClass({
     return dom.div(
       { className: "rep-row" },
       dom.div({ className: "rep-input" }, input),
-      dom.div({ className: "reps" }, this.renderRepInAllModes({
+      dom.div({ className: "reps" }, this.renderFoo({
         object: packet.exception || packet.result
       })),
       this.renderPacket(expression)

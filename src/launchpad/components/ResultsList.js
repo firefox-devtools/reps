@@ -22,6 +22,7 @@ const ResultsList = React.createClass({
       expressions,
       showResultPacket,
       hideResultPacket,
+      loadObjectProperties
     } = this.props;
 
     return dom.div({ className: "expressions" },
@@ -34,6 +35,7 @@ const ResultsList = React.createClass({
             expression: expression.toJS(),
             showResultPacket: () => showResultPacket(key),
             hideResultPacket: () => hideResultPacket(key),
+            loadObjectProperties
           })
          )
     );

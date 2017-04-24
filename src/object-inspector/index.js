@@ -1,10 +1,10 @@
 // @flow
 const React = require("react");
 const classnames = require("classnames");
-const ManagedTree = React.createFactory(require("./ManagedTree"));
-const Svg = require("./Svg");
+const ManagedTree = React.createFactory(require("./managed-tree"));
+const Svg = require("../reps/images/Svg");
 const Rep = require("./Rep");
-const { MODE } = require("../reps/constants");
+const {MODE} = require("../reps/constants");
 
 const {
   nodeIsOptimizedOut,
@@ -13,37 +13,37 @@ const {
   nodeIsPrimitive,
   isDefault,
   getChildren,
-  createNode
+  createNode,
 } = require("./utils");
 
-const { DOM: dom, PropTypes } = React;
+const {DOM: dom, PropTypes} = React;
 
 export type ObjectInspectorItemContentsValue = {
-    actor: string,
-    class: string,
-    displayClass: string,
-    extensible: boolean,
-    frozen: boolean,
-    ownPropertyLength: number,
-    preview: Object,
-    sealed: boolean,
-    type: string
+  actor: string,
+  class: string,
+  displayClass: string,
+  extensible: boolean,
+  frozen: boolean,
+  ownPropertyLength: number,
+  preview: Object,
+  sealed: boolean,
+  type: string,
 };
 
 type ObjectInspectorItemContents = {
-    value: ObjectInspectorItemContentsValue
+  value: ObjectInspectorItemContentsValue,
 };
 
 type ObjectInspectorItem = {
-    contents: Array<ObjectInspectorItem> & ObjectInspectorItemContents,
-    name: string,
-    path: string
+  contents: Array<ObjectInspectorItem> & ObjectInspectorItemContents,
+  name: string,
+  path: string,
 };
 
 type DefaultProps = {
-    onLabelClick: any,
-    onDoubleClick: any,
-    autoExpandDepth: number
+  onLabelClick: any,
+  onDoubleClick: any,
+  autoExpandDepth: number,
 };
 
 // This implements a component that renders an interactive inspector
@@ -86,7 +86,7 @@ const ObjectInspector = React.createClass({
     getExpanded: PropTypes.func,
     setExpanded: PropTypes.func,
     getActors: PropTypes.func.isRequired,
-    setActors: PropTypes.func
+    setActors: PropTypes.func,
   },
 
   actors: (null: any),
