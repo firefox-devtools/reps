@@ -11,9 +11,10 @@ const { span } = React.DOM;
  */
 function NaNRep(props) {
   return (
-    span({className: "objectBox objectBox-nan"},
-      "NaN"
-    )
+    span({
+      key: props.key,
+      className: "objectBox objectBox-nan"
+    }, "NaN")
   );
 }
 

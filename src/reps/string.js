@@ -15,6 +15,7 @@ const { span } = React.DOM;
  * Renders a string. String value is enclosed within quotes.
  */
 StringRep.propTypes = {
+  key: React.PropTypes.any,
   useQuotes: React.PropTypes.bool,
   escapeWhitespace: React.PropTypes.bool,
   style: React.PropTypes.object,
@@ -25,6 +26,7 @@ StringRep.propTypes = {
 
 function StringRep(props) {
   let {
+    key,
     cropLimit,
     object: text,
     member,
@@ -33,7 +35,10 @@ function StringRep(props) {
     escapeWhitespace = true,
   } = props;
 
-  let config = {className: "objectBox objectBox-string"};
+  let config = {
+    className: "objectBox objectBox-string",
+    key,
+  };
   if (style) {
     config.style = style;
   }

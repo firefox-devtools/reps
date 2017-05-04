@@ -15,25 +15,29 @@ const { span } = React.DOM;
  * Used to render JS built-in Date() object.
  */
 DateTime.propTypes = {
+  key: React.PropTypes.any,
   object: React.PropTypes.object.isRequired,
   objectLink: React.PropTypes.func,
 };
 
 function DateTime(props) {
   let grip = props.object;
-  let date;
+  let children = [];
   try {
-    date = span({className: "objectBox"},
+    children.push(
       getTitle(props, grip),
       span({className: "Date"},
         new Date(grip.preview.timestamp).toISOString()
       )
     );
   } catch (e) {
-    date = span({className: "objectBox"}, "Invalid Date");
+    children.push("Invalid Date");
   }
 
-  return date;
+  return span({
+    key: props.key,
+    className: "objectBox"
+  }, ...children);
 }
 
 function getTitle(props, grip) {

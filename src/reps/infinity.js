@@ -10,14 +10,16 @@ const { span } = React.DOM;
  * Renders a Infinity object
  */
 InfinityRep.propTypes = {
+  key: React.PropTypes.any,
   object: React.PropTypes.object.isRequired,
 };
 
 function InfinityRep(props) {
   return (
-    span({className: "objectBox objectBox-number"},
-      props.object.type
-    )
+    span({
+      key: props.key,
+      className: "objectBox objectBox-number"
+    }, props.object.type)
   );
 }
 

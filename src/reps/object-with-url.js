@@ -16,6 +16,7 @@ const { span } = React.DOM;
  * Renders a grip object with URL data.
  */
 ObjectWithURL.propTypes = {
+  key: React.PropTypes.any,
   object: React.PropTypes.object.isRequired,
   objectLink: React.PropTypes.func,
 };
@@ -23,7 +24,11 @@ ObjectWithURL.propTypes = {
 function ObjectWithURL(props) {
   let grip = props.object;
   return (
-    span({className: "objectBox objectBox-" + getType(grip)},
+    span(
+      {
+        key: props.key,
+        className: "objectBox objectBox-" + getType(grip)
+      },
       getTitle(props, grip),
       span({className: "objectPropValue"}, getDescription(grip))
     )

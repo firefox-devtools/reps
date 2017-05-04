@@ -10,17 +10,22 @@ const { span } = React.DOM;
  * Renders a symbol.
  */
 SymbolRep.propTypes = {
+  key: React.PropTypes.any,
   object: React.PropTypes.object.isRequired
 };
 
 function SymbolRep(props) {
-  let {object} = props;
+  let {
+    key,
+    object
+  } = props;
   let {name} = object;
 
   return (
-    span({className: "objectBox objectBox-symbol"},
-      `Symbol(${name || ""})`
-    )
+    span({
+      key,
+      className: "objectBox objectBox-symbol"
+    }, `Symbol(${name || ""})`)
   );
 }
 

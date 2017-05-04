@@ -12,6 +12,7 @@ const { MODE } = require("./constants");
  * Renders Error objects.
  */
 ErrorRep.propTypes = {
+  key: React.PropTypes.any,
   object: React.PropTypes.object.isRequired,
   // @TODO Change this to Object.values once it's supported in Node's version of V8
   mode: React.PropTypes.oneOf(Object.keys(MODE).map(key => MODE[key])),
@@ -38,7 +39,10 @@ function ErrorRep(props) {
     content = `${content}\nStack trace:\n${preview.stack}`;
   }
 
-  return safeObjectLink(props, {className: "objectBox-stackTrace"}, content);
+  return safeObjectLink(props, {
+    key: props.key,
+    className: "objectBox-stackTrace"
+  }, content);
 }
 
 // Registration

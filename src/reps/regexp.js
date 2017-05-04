@@ -12,15 +12,20 @@ const {
  * Renders a grip object with regular expression.
  */
 RegExp.propTypes = {
+  key: React.PropTypes.any,
   object: React.PropTypes.object.isRequired,
   objectLink: React.PropTypes.func,
 };
 
 function RegExp(props) {
-  let {object} = props;
+  let {
+    key,
+    object,
+  } = props;
 
   return (
     safeObjectLink(props, {
+      key,
       className: "objectBox objectBox-regexp regexpSource"
     }, getSource(object))
   );

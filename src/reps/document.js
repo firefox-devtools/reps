@@ -16,6 +16,7 @@ const { span } = React.DOM;
  * Renders DOM document object.
  */
 Document.propTypes = {
+  key: React.PropTypes.any,
   object: React.PropTypes.object.isRequired,
   objectLink: React.PropTypes.func,
 };
@@ -24,7 +25,11 @@ function Document(props) {
   let grip = props.object;
 
   return (
-    span({className: "objectBox objectBox-object"},
+    span(
+      {
+        key: props.key,
+        className: "objectBox objectBox-object"
+      },
       getTitle(props, grip),
       span({className: "objectPropValue"},
         getLocation(grip)

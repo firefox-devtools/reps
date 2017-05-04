@@ -18,6 +18,7 @@ const { span } = React.DOM;
  * Renders DOM element node.
  */
 ElementNode.propTypes = {
+  key: React.PropTypes.any,
   object: React.PropTypes.object.isRequired,
   // @TODO Change this to Object.values once it's supported in Node's version of V8
   mode: React.PropTypes.oneOf(Object.keys(MODE).map(key => MODE[key])),
@@ -29,6 +30,7 @@ ElementNode.propTypes = {
 
 function ElementNode(props) {
   let {
+    key,
     object,
     mode,
     onDOMNodeMouseOver,
@@ -39,7 +41,11 @@ function ElementNode(props) {
 
   let isInTree = object.preview && object.preview.isConnected === true;
 
-  let baseConfig = {className: "objectBox objectBox-node"};
+  let baseConfig = {
+    key,
+    className: "objectBox objectBox-node",
+  };
+
   let inspectIcon;
   if (isInTree) {
     if (onDOMNodeMouseOver) {

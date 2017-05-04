@@ -9,6 +9,7 @@ const { wrapRender } = require("./rep-utils");
  * that needs to distinguish between a simple text/value and a label.
  */
 Caption.propTypes = {
+  key: React.PropTypes.any,
   object: React.PropTypes.oneOfType([
     React.PropTypes.number,
     React.PropTypes.string,
@@ -17,7 +18,10 @@ Caption.propTypes = {
 
 function Caption(props) {
   return (
-    DOM.span({"className": "caption"}, props.object)
+    DOM.span({
+      key: props.key,
+      "className": "caption"
+    }, props.object)
   );
 }
 

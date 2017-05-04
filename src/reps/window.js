@@ -18,6 +18,7 @@ const {span} = React.DOM;
  * Renders a grip representing a window.
  */
 WindowRep.propTypes = {
+  key: React.PropTypes.any,
   // @TODO Change this to Object.values once it's supported in Node's version of V8
   mode: React.PropTypes.oneOf(Object.keys(MODE).map(key => MODE[key])),
   object: React.PropTypes.object.isRequired,
@@ -26,20 +27,24 @@ WindowRep.propTypes = {
 
 function WindowRep(props) {
   let {
+    key,
     mode,
     object,
   } = props;
 
+  const config = {
+    key,
+    className: "objectBox objectBox-Window"
+  };
+
   if (mode === MODE.TINY) {
     return (
-      span({className: "objectBox objectBox-Window"},
-        getTitle(props, object)
-      )
+      span(config, getTitle(props, object))
     );
   }
 
   return (
-    span({className: "objectBox objectBox-Window"},
+    span(config,
       getTitle(props, object),
       " ",
       span({className: "objectPropValue"},

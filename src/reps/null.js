@@ -11,9 +11,10 @@ const { span } = React.DOM;
  */
 function Null(props) {
   return (
-    span({className: "objectBox objectBox-null"},
-      "null"
-    )
+    span({
+      key: props.key,
+      className: "objectBox objectBox-null"
+    }, "null")
   );
 }
 

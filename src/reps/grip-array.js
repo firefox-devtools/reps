@@ -16,6 +16,7 @@ const { span } = React.DOM;
  * and the max number of rendered items depends on the current mode.
  */
 GripArray.propTypes = {
+  key: React.PropTypes.any,
   object: React.PropTypes.object.isRequired,
   // @TODO Change this to Object.values once it's supported in Node's version of V8
   mode: React.PropTypes.oneOf(Object.keys(MODE).map(key => MODE[key])),
@@ -28,6 +29,7 @@ GripArray.propTypes = {
 
 function GripArray(props) {
   let {
+    key,
     object,
     mode = MODE.SHORT
   } = props;
@@ -52,8 +54,11 @@ function GripArray(props) {
   let title = getTitle(props, object);
 
   return (
-    span({
-      className: "objectBox objectBox-array"},
+    span(
+      {
+        key,
+        className: "objectBox objectBox-array"
+      },
       title,
       safeObjectLink(props, {
         className: "arrayLeftBracket",
