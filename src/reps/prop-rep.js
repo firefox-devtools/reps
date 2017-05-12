@@ -1,9 +1,6 @@
 // Dependencies
 const React = require("react");
-const {
-  maybeEscapePropertyName,
-  wrapRender,
-} = require("./rep-utils");
+const { maybeEscapePropertyName, wrapRender } = require("./rep-utils");
 const { MODE } = require("./constants");
 // Shortcuts
 const { span } = React.DOM;
@@ -15,10 +12,8 @@ const { span } = React.DOM;
  */
 PropRep.propTypes = {
   // Property name.
-  name: React.PropTypes.oneOfType([
-    React.PropTypes.string,
-    React.PropTypes.object,
-  ]).isRequired,
+  name: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.object])
+    .isRequired,
   // Equal character rendered between property name and value.
   equal: React.PropTypes.string,
   // Delimiter character used to separate individual properties.
@@ -32,20 +27,14 @@ PropRep.propTypes = {
   // Normally a PropRep will quote a property name that isn't valid
   // when unquoted; but this flag can be used to suppress the
   // quoting.
-  suppressQuotes: React.PropTypes.bool,
+  suppressQuotes: React.PropTypes.bool
 };
 
 function PropRep(props) {
   const Grip = require("./grip");
   const { Rep } = require("./rep");
 
-  let {
-    name,
-    mode,
-    equal,
-    delim,
-    suppressQuotes,
-  } = props;
+  let { name, mode, equal, delim, suppressQuotes } = props;
 
   let key;
   // The key can be a simple string, for plain objects,
@@ -54,31 +43,38 @@ function PropRep(props) {
     if (!suppressQuotes) {
       name = maybeEscapePropertyName(name);
     }
-    key = span({"className": "nodeName"}, name);
+    key = span({ className: "nodeName" }, name);
   } else {
-    key = Rep(Object.assign({}, props, {
-      object: name,
-      mode: mode || MODE.TINY,
-      defaultRep: Grip,
-    }));
+    key = Rep(
+      Object.assign({}, props, {
+        object: name,
+        mode: mode || MODE.TINY,
+        defaultRep: Grip
+      })
+    );
   }
 
   let delimElement;
   if (delim) {
-    delimElement = span({
-      "className": "objectComma"
-    }, delim);
+    delimElement = span(
+      {
+        className: "objectComma"
+      },
+      delim
+    );
   }
 
-  return (
-    span({},
-      key,
-      span({
-        "className": "objectEqual"
-      }, equal),
-      Rep(Object.assign({}, props)),
-      delimElement,
-    )
+  return span(
+    {},
+    key,
+    span(
+      {
+        className: "objectEqual"
+      },
+      equal
+    ),
+    Rep(Object.assign({}, props)),
+    delimElement
   );
 }
 

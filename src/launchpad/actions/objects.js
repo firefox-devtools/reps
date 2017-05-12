@@ -1,21 +1,19 @@
+const constants = require("../constants");
+
 function loadObjectProperties(object) {
-  return async function ({dispatch, client}) {
-    debugger
+  return async function ({ dispatch, client }) {
     const properties = await client.getProperties(object);
 
-    debugger
-    return {
-      key: "sdf",
-      type: constants.ADD_EXPRESSION,
+    dispatch({
+      type: constants.LOAD_OBJECT,
       value: {
-        input,
-        packet,
-      },
-    };
-
-  }
+        object,
+        properties
+      }
+    });
+  };
 }
 
 module.exports = {
   loadObjectProperties
-}
+};
