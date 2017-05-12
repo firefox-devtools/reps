@@ -39,41 +39,39 @@ const Result = React.createClass({
     return Object.keys(MODE).map(modeKey => this.renderRep({ object, modeKey }));
   },
 
-  renderFoo: function ({ object }) {
-    return this.renderOI({ object });
-  },
-
   renderRep: function ({ object, modeKey }) {
-    return dom.div(
-      {
-        className: `rep-element ${modeKey}`,
-        key: JSON.stringify(object) + modeKey,
-        "data-mode": modeKey
-      },
-      Rep({
-        object,
-        defaultRep: Grip,
-        mode: MODE[modeKey],
-        onInspectIconClick: nodeFront => console.log("inspectIcon click", nodeFront)
-      })
-    );
-  },
-
-  renderOI: function ({ object }) {
-    const { loadObjectProperties, loadedObjects } = this.props;
-    const getObjectProperties = id => loadedObjects.get(id);
-    // const roots = [
+    // return dom.div(
     //   {
-    //     name: "foo",
-    //     path: "foo",
-    //     contents: { value: object }
-    //   }
-    // ];
-    const roots = getChi;
+    //     className: `rep-element ${modeKey}`,
+    //     key: JSON.stringify(object) + modeKey,
+    //     "data-mode": modeKey
+    //   },
+    //   Rep({
+    //     object,
+    //     defaultRep: Grip,
+    //     mode: MODE[modeKey],
+    //     onInspectIconClick: nodeFront => console.log("inspectIcon click", nodeFront)
+    //   })
+    // );
+
+    const { loadObjectProperties, loadedObjects } = this.props;
+    const getObjectProperties = id => console.log("getObjectProperties", id, loadedObjects.toJS())
+      || loadedObjects.get(id);
+
+    const path = object.actor || JSON.stringify(object);
+    const roots = [
+      {
+        path,
+        contents: {
+          value: object
+        }
+      }
+    ];
     return dom.div(
       {
         className: `rep-element`,
-        key: JSON.stringify(object)
+        key: `${path}${modeKey.toString()}`,
+        "data-mode": modeKey
       },
       ObjectInspector({
         roots,
@@ -81,7 +79,8 @@ const Result = React.createClass({
         autoExpandDepth: 0,
         onDoubleClick: () => {},
         loadObjectProperties,
-        getActors: () => ({})
+        getActors: () => ({}),
+        mode: MODE[modeKey],
       })
     );
   },
@@ -108,7 +107,10 @@ const Result = React.createClass({
             "Copy as JSON"
           )
       ),
-      showPacket && dom.div({ className: "packet-rep" }, Rep({ object: packet }))
+      showPacket && dom.div(
+        { className: "packet-rep" },
+        Rep({ object: packet }),
+      )
     );
   },
 
@@ -120,7 +122,7 @@ const Result = React.createClass({
       dom.div({ className: "rep-input" }, input),
       dom.div(
         { className: "reps" },
-        this.renderFoo({
+        this.renderRepInAllModes({
           object: packet.exception || packet.result
         })
       ),

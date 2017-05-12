@@ -4,11 +4,14 @@ const Immutable = require("immutable");
 const initialState = Immutable.Map();
 
 function update(state = initialState, action) {
-  const { type, value, key } = action;
-
+  const { type, value } = action;
   switch (type) {
     case constants.LOAD_OBJECT:
-      return state.set(value.properties.from, value.properties);
+      console.log("LOAD_OBJECT", value);
+      return state.set(
+        value.properties.from,
+        value.properties
+      );
   }
 
   return state;
