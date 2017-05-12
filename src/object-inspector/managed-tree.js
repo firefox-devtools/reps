@@ -133,9 +133,11 @@ let ManagedTree = createClass({
       onFocus: this.focusItem,
 
       renderItem: (...args) => {
-        return this.props.renderItem(...args, {
-          setExpanded: this.setExpanded
-        });
+        return this.props.renderItem(...args,
+          this.props.mode,
+          {
+            setExpanded: this.setExpanded
+          });
       }
     });
 
