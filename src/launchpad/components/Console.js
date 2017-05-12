@@ -20,7 +20,7 @@ const Console = React.createClass({
   propTypes: {
     client: PropTypes.object.isRequired,
     shortcuts: PropTypes.object.isRequired,
-    clearExpressions: PropTypes.func.isRequired,
+    clearExpressions: PropTypes.func.isRequired
   },
 
   componentDidMount: function () {
@@ -42,20 +42,23 @@ const Console = React.createClass({
       hideResultPacket,
       navigateInputHistory,
       showResultPacket,
-      loadObjectProperties
+      loadObjectProperties,
+      loadedObjects
     } = this.props;
 
-    return dom.main({},
+    return dom.main(
+      {},
       Header({
         addInput,
         changeCurrentInput,
         clearResultsList: clearExpressions,
         currentInputValue,
         evaluate: evaluateInput,
-        navigateInputHistory,
+        navigateInputHistory
       }),
       ResultsList({
         expressions: expressions.reverse(),
+        loadedObjects,
         hideResultPacket,
         showResultPacket,
         loadObjectProperties
@@ -67,7 +70,8 @@ const Console = React.createClass({
 function mapStateToProps(state) {
   return {
     expressions: selectors.getExpressions(state),
-    currentInputValue: selectors.getCurrentInputValue(state),
+    loadedObjects: selectors.getLoadedObjects(state),
+    currentInputValue: selectors.getCurrentInputValue(state)
   };
 }
 
@@ -75,7 +79,4 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(require("../actions"), dispatch);
 }
 
-module.exports = connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(Console);
+module.exports = connect(mapStateToProps, mapDispatchToProps)(Console);

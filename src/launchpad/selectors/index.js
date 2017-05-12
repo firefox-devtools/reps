@@ -2,6 +2,10 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
+function getLoadedObjects(state, foo) {
+  return state.objects;
+}
+
 function getExpressions(state) {
   return state.expressions;
 }
@@ -16,5 +20,6 @@ function getCurrentInputValue(state) {
 
 module.exports = {
   getCurrentInputValue,
-  getExpressions,
+  getLoadedObjects,
+  getExpressions
 };
