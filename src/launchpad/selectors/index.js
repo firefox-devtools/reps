@@ -1,3 +1,7 @@
+function getLoadedObjects(state, foo) {
+  return state.objects;
+}
+
 function getExpressions(state) {
   return state.expressions;
 }
@@ -12,5 +16,6 @@ function getCurrentInputValue(state) {
 
 module.exports = {
   getCurrentInputValue,
-  getExpressions,
+  getLoadedObjects,
+  getExpressions
 };

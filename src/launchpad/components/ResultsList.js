@@ -10,7 +10,7 @@ const ResultsList = React.createClass({
   propTypes: {
     expressions: ImPropTypes.map.isRequired,
     showResultPacket: PropTypes.func.isRequired,
-    hideResultPacket: PropTypes.func.isRequired,
+    hideResultPacket: PropTypes.func.isRequired
   },
 
   render: function () {
@@ -18,20 +18,22 @@ const ResultsList = React.createClass({
       expressions,
       showResultPacket,
       hideResultPacket,
+      loadObjectProperties,
+      loadedObjects
     } = this.props;
 
-    return dom.div({ className: "expressions" },
-      expressions
-        .entrySeq()
-        .toJS()
-        .map(([ key, expression ]) =>
-          Result({
-            key,
-            expression: expression.toJS(),
-            showResultPacket: () => showResultPacket(key),
-            hideResultPacket: () => hideResultPacket(key),
-          })
-         )
+    return dom.div(
+      { className: "expressions" },
+      expressions.entrySeq().toJS().map(([key, expression]) =>
+        Result({
+          key,
+          expression: expression.toJS(),
+          loadedObjects,
+          showResultPacket: () => showResultPacket(key),
+          hideResultPacket: () => hideResultPacket(key),
+          loadObjectProperties
+        })
+      )
     );
   }
 });
