@@ -23,9 +23,10 @@ function onConnect({ client } = {}) {
     return;
   }
 
+
   let store = configureStore({
     makeThunkArgs: (args, state) => {
-      return Object.assign({}, args, { client });
+      return Object.assign({}, args, { client: client.clientCommands });
     }
   });
 
@@ -49,4 +50,3 @@ bootstrap(React, ReactDOM, root)
     onConnect,
     e => console.error("An error occured during the connection", e)
   )
-  .catch(e => console.error("An error occured in the onConnect function", e));

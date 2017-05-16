@@ -3,6 +3,7 @@ const { DOM: dom, PropTypes, createFactory } = React;
 
 const { MODE } = require("../../reps/constants");
 const Rep = createFactory(require("../../reps/rep").Rep);
+const ObjectInspector = createFactory(require("../../object-inspector"));
 const Grip = require("../../reps/grip");
 
 const Result = React.createClass({
@@ -11,7 +12,7 @@ const Result = React.createClass({
   propTypes: {
     expression: PropTypes.object.isRequired,
     showResultPacket: PropTypes.func.isRequired,
-    hideResultPacket: PropTypes.func.isRequired,
+    hideResultPacket: PropTypes.func.isRequired
   },
 
   copyPacketToClipboard: function (e, packet) {
@@ -26,7 +27,7 @@ const Result = React.createClass({
   },
 
   onHeaderClick: function () {
-    const {expression} = this.props;
+    const { expression } = this.props;
     if (expression.showPacket === true) {
       this.props.hideResultPacket();
     } else {
@@ -35,57 +36,96 @@ const Result = React.createClass({
   },
 
   renderRepInAllModes: function ({ object }) {
-    return Object.keys(MODE).map(modeKey =>
-       this.renderRep({ object, modeKey })
-     );
+    return Object.keys(MODE).map(modeKey => this.renderRep({ object, modeKey }));
   },
 
   renderRep: function ({ object, modeKey }) {
+    // return dom.div(
+    //   {
+    //     className: `rep-element ${modeKey}`,
+    //     key: JSON.stringify(object) + modeKey,
+    //     "data-mode": modeKey
+    //   },
+    //   Rep({
+    //     object,
+    //     defaultRep: Grip,
+    //     mode: MODE[modeKey],
+    //     onInspectIconClick: nodeFront => console.log("inspectIcon click", nodeFront)
+    //   })
+    // );
+
+    const { loadObjectProperties, loadedObjects } = this.props;
+    const getObjectProperties = id => console.log("getObjectProperties", id, loadedObjects.toJS())
+      || loadedObjects.get(id);
+
+    const path = object.actor || JSON.stringify(object);
+    const roots = [
+      {
+        path,
+        contents: {
+          value: object
+        }
+      }
+    ];
     return dom.div(
       {
-        className: `rep-element ${modeKey}`,
-        key: JSON.stringify(object) + modeKey,
-        "data-mode": modeKey,
+        className: `rep-element`,
+        key: `${path}${modeKey.toString()}`,
+        "data-mode": modeKey
       },
-      Rep({
-        object,
-        defaultRep: Grip,
+      ObjectInspector({
+        roots,
+        getObjectProperties,
+        autoExpandDepth: 0,
+        onDoubleClick: () => {},
+        loadObjectProperties,
+        getActors: () => ({}),
         mode: MODE[modeKey],
-        onInspectIconClick: nodeFront => console.log("inspectIcon click", nodeFront),
       })
     );
   },
 
   renderPacket: function (expression) {
-    let {packet, showPacket} = expression;
+    let { packet, showPacket } = expression;
     let headerClassName = showPacket ? "packet-expanded" : "packet-collapsed";
     let headerLabel = showPacket ? "Hide expression packet" : "Show expression packet";
 
-    return dom.div({ className: "packet" },
-      dom.header({
-        className: headerClassName,
-        onClick: this.onHeaderClick,
-      },
+    return dom.div(
+      { className: "packet" },
+      dom.header(
+        {
+          className: headerClassName,
+          onClick: this.onHeaderClick
+        },
         headerLabel,
-        showPacket && dom.button({
-          className: "copy-packet-button",
-          onClick: (e) => this.copyPacketToClipboard(e, packet)
-        }, "Copy as JSON")
+        showPacket &&
+          dom.button(
+            {
+              className: "copy-packet-button",
+              onClick: e => this.copyPacketToClipboard(e, packet)
+            },
+            "Copy as JSON"
+          )
       ),
-      showPacket &&
-        dom.div({className: "packet-rep"}, Rep({object: packet}))
-      );
+      showPacket && dom.div(
+        { className: "packet-rep" },
+        Rep({ object: packet }),
+      )
+    );
   },
 
   render: function () {
-    let {expression} = this.props;
-    let {input, packet} = expression;
+    let { expression } = this.props;
+    let { input, packet } = expression;
     return dom.div(
       { className: "rep-row" },
       dom.div({ className: "rep-input" }, input),
-      dom.div({ className: "reps" }, this.renderRepInAllModes({
-        object: packet.exception || packet.result
-      })),
+      dom.div(
+        { className: "reps" },
+        this.renderRepInAllModes({
+          object: packet.exception || packet.result
+        })
+      ),
       this.renderPacket(expression)
     );
   }
