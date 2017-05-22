@@ -20,18 +20,23 @@ const { span } = React.DOM;
  * Renders DOM attribute
  */
 Attribute.propTypes = {
+  key: React.PropTypes.any,
   object: React.PropTypes.object.isRequired,
   objectLink: React.PropTypes.func,
 };
 
 function Attribute(props) {
   let {
+    key,
     object,
   } = props;
   let value = object.preview.value;
 
   return (
-    safeObjectLink(props, {className: "objectLink-Attr"},
+    safeObjectLink(props, {
+      key,
+      className: "objectLink-Attr",
+    },
       span({className: "attrTitle"},
         getTitle(object)
       ),

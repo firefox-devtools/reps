@@ -13,11 +13,12 @@ const { span } = React.DOM;
 /**
  * Renders undefined value
  */
-const Undefined = function () {
+const Undefined = function (props) {
   return (
-    span({className: "objectBox objectBox-undefined"},
-      "undefined"
-    )
+    span({
+      key: props.key,
+      className: "objectBox objectBox-undefined"
+    }, "undefined")
   );
 };
 

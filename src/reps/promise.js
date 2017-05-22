@@ -20,6 +20,7 @@ const { span } = React.DOM;
  * Renders a DOM Promise object.
  */
 PromiseRep.propTypes = {
+  key: React.PropTypes.any,
   object: React.PropTypes.object.isRequired,
   // @TODO Change this to Object.values once it's supported in Node's version of V8
   mode: React.PropTypes.oneOf(Object.keys(MODE).map(key => MODE[key])),
@@ -30,14 +31,21 @@ PromiseRep.propTypes = {
 };
 
 function PromiseRep(props) {
-  const object = props.object;
+  const {
+    key,
+    object
+  } = props;
   const {promiseState} = object;
 
   if (props.mode === MODE.TINY) {
     let { Rep } = require("./rep");
 
     return (
-      span({className: "objectBox objectBox-object"},
+      span(
+        {
+          key,
+          className: "objectBox objectBox-object"
+        },
         getTitle(props, object),
         safeObjectLink(props, {
           className: "objectLeftBrace",

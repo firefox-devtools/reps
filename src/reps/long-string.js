@@ -17,6 +17,7 @@ const { span } = React.DOM;
  * Renders a long string grip.
  */
 LongStringRep.propTypes = {
+  key: React.PropTypes.any,
   useQuotes: React.PropTypes.bool,
   escapeWhitespace: React.PropTypes.bool,
   style: React.PropTypes.object,
@@ -27,6 +28,7 @@ LongStringRep.propTypes = {
 
 function LongStringRep(props) {
   let {
+    key,
     cropLimit,
     member,
     object,
@@ -36,7 +38,11 @@ function LongStringRep(props) {
   } = props;
   let {fullText, initial, length} = object;
 
-  let config = {className: "objectBox objectBox-string"};
+  let config = {
+    key,
+    className: "objectBox objectBox-string"
+  };
+
   if (style) {
     config.style = style;
   }

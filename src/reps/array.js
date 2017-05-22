@@ -24,6 +24,7 @@ const DOM = React.DOM;
  * and the max number of rendered items depends on the current mode.
  */
 ArrayRep.propTypes = {
+  key: React.PropTypes.any,
   mode: ModePropType,
   objectLink: React.PropTypes.func,
   object: React.PropTypes.array.isRequired,
@@ -31,6 +32,7 @@ ArrayRep.propTypes = {
 
 function ArrayRep(props) {
   let {
+    key,
     object,
     mode = MODE.SHORT,
   } = props;
@@ -53,6 +55,7 @@ function ArrayRep(props) {
 
   return (
     DOM.span({
+      key,
       className: "objectBox objectBox-array"},
       safeObjectLink(props, {
         className: "arrayLeftBracket",

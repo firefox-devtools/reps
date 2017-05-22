@@ -20,6 +20,7 @@ const { span } = React.DOM;
  * entries enclosed in curly brackets.
  */
 GripMap.propTypes = {
+  key: React.PropTypes.any,
   object: React.PropTypes.object,
   // @TODO Change this to Object.values once it's supported in Node's version of V8
   mode: React.PropTypes.oneOf(Object.keys(MODE).map(key => MODE[key])),
@@ -33,6 +34,7 @@ GripMap.propTypes = {
 
 function GripMap(props) {
   let {
+    key,
     mode,
     object,
   } = props;
@@ -49,7 +51,11 @@ function GripMap(props) {
     (props.mode === MODE.LONG) ? 10 : 3);
 
   return (
-    span({className: "objectBox objectBox-object"},
+    span(
+      {
+        key,
+        className: "objectBox objectBox-object"
+      },
       getTitle(props, object),
       safeObjectLink(props, {
         className: "objectLeftBrace",

@@ -20,6 +20,7 @@ const { span } = React.DOM;
  * Renders DOM comment node.
  */
 CommentNode.propTypes = {
+  key: React.PropTypes.any,
   object: React.PropTypes.object.isRequired,
   // @TODO Change this to Object.values once it's supported in Node's version of V8
   mode: React.PropTypes.oneOf(Object.keys(MODE).map(key => MODE[key])),
@@ -27,6 +28,7 @@ CommentNode.propTypes = {
 
 function CommentNode(props) {
   let {
+    key,
     object,
     mode = MODE.SHORT
   } = props;
@@ -38,7 +40,10 @@ function CommentNode(props) {
     textContent = cropString(textContent, 50);
   }
 
-  return span({className: "objectBox theme-comment"}, `<!-- ${textContent} -->`);
+  return span({
+    key,
+    className: "objectBox theme-comment"
+  }, `<!-- ${textContent} -->`);
 }
 
 // Registration

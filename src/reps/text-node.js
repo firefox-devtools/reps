@@ -22,6 +22,7 @@ const DOM = React.DOM;
  * Renders DOM #text node.
  */
 TextNode.propTypes = {
+  key: React.PropTypes.any,
   object: React.PropTypes.object.isRequired,
   // @TODO Change this to Object.values once it's supported in Node's version of V8
   mode: React.PropTypes.oneOf(Object.keys(MODE).map(key => MODE[key])),
@@ -33,6 +34,7 @@ TextNode.propTypes = {
 
 function TextNode(props) {
   let {
+    key,
     object: grip,
     mode = MODE.SHORT,
     onDOMNodeMouseOver,
@@ -40,7 +42,11 @@ function TextNode(props) {
     onInspectIconClick,
   } = props;
 
-  let baseConfig = {className: "objectBox objectBox-textNode"};
+  let baseConfig = {
+    key,
+    className: "objectBox objectBox-textNode"
+  };
+
   let inspectIcon;
   let isInTree = grip.preview && grip.preview.isConnected === true;
 

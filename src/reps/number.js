@@ -14,6 +14,7 @@ const { span } = React.DOM;
  * Renders a number
  */
 Number.propTypes = {
+  key: React.PropTypes.any,
   object: React.PropTypes.oneOfType([
     React.PropTypes.object,
     React.PropTypes.number,
@@ -25,9 +26,10 @@ function Number(props) {
   let value = props.object;
 
   return (
-    span({className: "objectBox objectBox-number"},
-      stringify(value)
-    )
+    span({
+      key: props.key,
+      className: "objectBox objectBox-number"
+    }, stringify(value))
   );
 }
 

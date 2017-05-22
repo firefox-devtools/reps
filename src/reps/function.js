@@ -20,6 +20,7 @@ const { span } = React.DOM;
  * This component represents a template for Function objects.
  */
 FunctionRep.propTypes = {
+  key: React.PropTypes.any,
   object: React.PropTypes.object.isRequired,
   objectLink: React.PropTypes.func,
 };
@@ -30,7 +31,12 @@ function FunctionRep(props) {
   return (
     // Set dir="ltr" to prevent function parentheses from
     // appearing in the wrong direction
-    span({dir: "ltr", className: "objectBox objectBox-function"},
+    span(
+      {
+        key: props.key,
+        dir: "ltr",
+        className: "objectBox objectBox-function"
+      },
       getTitle(props, grip),
       summarizeFunction(grip)
     )

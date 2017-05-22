@@ -18,6 +18,7 @@ const { span } = React.DOM;
  * properties enclosed in curly brackets.
  */
 ObjectRep.propTypes = {
+  key: React.PropTypes.any,
   object: React.PropTypes.object.isRequired,
   // @TODO Change this to Object.values once it's supported in Node's version of V8
   mode: React.PropTypes.oneOf(Object.keys(MODE).map(key => MODE[key])),
@@ -28,17 +29,23 @@ ObjectRep.propTypes = {
 function ObjectRep(props) {
   let object = props.object;
   let propsArray = safePropIterator(props, object);
+  let key = props.key;
 
   if (props.mode === MODE.TINY || !propsArray.length) {
     return (
-      span({className: "objectBox objectBox-object"},
-        getTitle(props, object)
-      )
+      span({
+        key,
+        className: "objectBox objectBox-object"
+      }, getTitle(props, object))
     );
   }
 
   return (
-    span({className: "objectBox objectBox-object"},
+    span(
+      {
+        key,
+        className: "objectBox objectBox-object"
+      },
       getTitle(props, object),
       safeObjectLink(props, {
         className: "objectLeftBrace",
