@@ -7,7 +7,7 @@ const React = require("react");
 const classnames = require("classnames");
 const ManagedTree = React.createFactory(require("./managed-tree"));
 const Svg = require("../reps/images/Svg");
-const Rep = require("./Rep");
+const {Rep} = require("../reps/rep");
 const {MODE} = require("../reps/constants");
 
 const {
