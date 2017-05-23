@@ -44,33 +44,13 @@ const Result = React.createClass({
   },
 
   renderRep: function ({ object, modeKey }) {
-    // return dom.div(
-    //   {
-    //     className: `rep-element ${modeKey}`,
-    //     key: JSON.stringify(object) + modeKey,
-    //     "data-mode": modeKey
-    //   },
-    //   Rep({
-    //     object,
-    //     defaultRep: Grip,
-    //     mode: MODE[modeKey],
-    //     onInspectIconClick: nodeFront => console.log("inspectIcon click", nodeFront)
-    //   })
-    // );
-
     const { loadObjectProperties, loadedObjects } = this.props;
-    const getObjectProperties = id => console.log("getObjectProperties", id, loadedObjects.toJS())
-      || loadedObjects.get(id);
+    const getObjectProperties = function (id) {
+      console.log("getObjectProperties", id, loadedObjects.toJS());
+      return loadedObjects.get(id);
+    };
 
-    const path = object.actor || JSON.stringify(object);
-    const roots = [
-      {
-        path,
-        contents: {
-          value: object
-        }
-      }
-    ];
+    const path = (object.actor || JSON.stringify(object)) + modeKey;
     return dom.div(
       {
         className: `rep-element`,
@@ -78,13 +58,17 @@ const Result = React.createClass({
         "data-mode": modeKey
       },
       ObjectInspector({
-        roots,
+        desc: {
+          value: object,
+        },
+        path,
         getObjectProperties,
         autoExpandDepth: 0,
         onDoubleClick: () => {},
         loadObjectProperties,
         getActors: () => ({}),
         mode: MODE[modeKey],
+        onInspectIconClick: nodeFront => console.log("inspectIcon click", nodeFront),
       })
     );
   },

@@ -212,13 +212,14 @@ const ObjectInspector = React.createClass({
 
   getRoots: function() {
     const {
-      name,
       desc,
+      name,
+      path,
       roots,
     } = this.props;
 
     if (!roots) {
-      roots = [createNode(name, name, desc)];
+      roots = [createNode(name, path || name, desc)];
     }
 
     return roots;
