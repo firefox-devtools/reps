@@ -45,12 +45,10 @@ const Result = React.createClass({
 
   renderRep: function ({ object, modeKey }) {
     const { loadObjectProperties, loadedObjects } = this.props;
-    const getObjectProperties = function (id) {
-      console.log("getObjectProperties", id, loadedObjects.toJS());
-      return loadedObjects.get(id);
-    };
-
     const path = (object.actor || JSON.stringify(object)) + modeKey;
+
+    const getObjectProperties = id => loadedObjects.get(id);
+
     return dom.div(
       {
         className: `rep-element`,
@@ -58,17 +56,16 @@ const Result = React.createClass({
         "data-mode": modeKey
       },
       ObjectInspector({
+        autoExpandDepth: 0,
         desc: {
           value: object,
         },
-        path,
         getObjectProperties,
-        autoExpandDepth: 0,
-        onDoubleClick: () => {},
         loadObjectProperties,
-        getActors: () => ({}),
         mode: MODE[modeKey],
+        onDoubleClick: () => {},
         onInspectIconClick: nodeFront => console.log("inspectIcon click", nodeFront),
+        path,
       })
     );
   },
