@@ -1,0 +1,16 @@
+[ignore]
+.*node_modules/cjson.*
+.*node_modules/fbjs.*
+.*node_modules/npm.*
+.*node_modules/stylelint.*
+.*node_modules/config-chain.*
+.*node_modules/documentation.*
+<PROJECT_ROOT>/firefox/.*
+.*flow-coverage-report/.*
+
+[libs]
+./src/global-types.js
+
+[options]
+unsafe.enable_getters_and_setters=true
+suppress_comment=\\(.\\|\n\\)*\\$FlowIgnore

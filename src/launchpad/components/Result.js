@@ -40,6 +40,7 @@ const Result = React.createClass({
   },
 
   renderRepInAllModes: function ({ object }) {
+    return this.renderRep({ object, modeKey: "TINY" });
     return Object.keys(MODE).map(modeKey => this.renderRep({ object, modeKey }));
   },
 
@@ -56,14 +57,13 @@ const Result = React.createClass({
         "data-mode": modeKey
       },
       ObjectInspector({
-        autoExpandDepth: 0,
+        autoExpandDepth: 2,
         desc: {
           value: object,
         },
         getObjectProperties,
         loadObjectProperties,
         mode: MODE[modeKey],
-        onDoubleClick: () => {},
         onInspectIconClick: nodeFront => console.log("inspectIcon click", nodeFront),
         path,
       })

@@ -11,7 +11,8 @@
     "copy-assets": "node bin/copy-assets",
     "copy-assets-watch": "node bin/copy-assets --watch",
     "license-check": "devtools-license-check",
-    "prepublish": "node bin/publish-assets"
+    "prepublish": "node bin/publish-assets",
+    "test": "jest"
   },
   "author": "",
   "license": "MPL-2.0",
@@ -35,7 +36,9 @@
     "devtools-license-check": "^0.2.0",
     "eslint": "^3.12.0",
     "eslint-plugin-mozilla": "0.2.3",
-    "fs-extra": "^2.0.0"
+    "flow-bin": "^0.43.1",
+    "fs-extra": "^2.0.0",
+    "jest-cli": "^20.0.4"
   },
   "jest": {
     "rootDir": "src",

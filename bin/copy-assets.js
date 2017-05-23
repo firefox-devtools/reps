@@ -51,6 +51,12 @@ function start() {
     {cwd: projectPath}
   );
 
+  copyFile(
+    path.resolve(projectPath, "src/object-inspector/managed-tree.css"),
+    path.join(mcPath, mcModulePath, "managed-tree.css"),
+    {cwd: projectPath}
+  );
+
   console.log("  creating reps.js bundle...");
   makeBundle({
     outputPath: path.join(mcPath, mcModulePath),
