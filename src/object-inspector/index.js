@@ -128,6 +128,7 @@ const ObjectInspector = React.createClass({
   getChildren(item: ObjectInspectorItem) {
     const { getObjectProperties } = this.props;
     const { actors } = this;
+
     return getChildren({
       getObjectProperties,
       actors,
@@ -226,7 +227,15 @@ const ObjectInspector = React.createClass({
   },
 
   onExpand: function(item) {
-    if (nodeHasProperties(item)) {
+    const { getObjectProperties } = this.props;
+
+    if (
+      nodeHasProperties(item)
+      && (
+        item.contents.value
+        && !getObjectProperties(item.contents.value.actor)
+      )
+    ) {
       this.props.loadObjectProperties(item.contents.value);
     }
   },
