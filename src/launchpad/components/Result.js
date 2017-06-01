@@ -40,7 +40,6 @@ const Result = React.createClass({
   },
 
   renderRepInAllModes: function ({ object }) {
-    return this.renderRep({ object, modeKey: "TINY" });
     return Object.keys(MODE).map(modeKey => this.renderRep({ object, modeKey }));
   },
 
@@ -57,7 +56,7 @@ const Result = React.createClass({
         "data-mode": modeKey
       },
       ObjectInspector({
-        autoExpandDepth: 2,
+        autoExpandDepth: 0,
         desc: {
           value: object,
         },
@@ -94,7 +93,7 @@ const Result = React.createClass({
       ),
       showPacket && dom.div(
         { className: "packet-rep" },
-        Rep({ object: packet }),
+        Rep({ object: packet })
       )
     );
   },

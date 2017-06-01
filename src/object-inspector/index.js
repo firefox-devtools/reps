@@ -61,19 +61,6 @@ type TreeItem = {
   path: string
 };
 
-type NextProps = {
-  autoExpandAll: boolean,
-  autoExpandDepth: number,
-  getChildren: () => any,
-  getKey: () => string,
-  getRoots: () => any,
-  highlightItems: Array<TreeItem>,
-  itemHeight: number,
-  listItems?: Array<TreeItem>,
-  onFocus: () => any,
-  renderItem: () => any,
-};
-
 type InitialState = {
   expandedItems: any,
   focusedItem: ?TreeItem
@@ -116,16 +103,15 @@ const ObjectInspector = createClass({
       roots: PropTypes.array,
       getObjectProperties: PropTypes.func.isRequired,
       loadObjectProperties: PropTypes.func.isRequired,
-      onLabelClick: PropTypes.func.isRequired,
-      onDoubleClick: PropTypes.func.isRequired,
-      getExpanded: PropTypes.func,
-      setExpanded: PropTypes.func,
-      getActors: PropTypes.func.isRequired,
+      onLabelClick: PropTypes.func,
+      onDoubleClick: PropTypes.func,
+      getActors: PropTypes.func,
       setActors: PropTypes.func,
     }
   ),
 
   actors: (null: any),
+  roots: (null:any),
 
   displayName: "ObjectInspector",
 
@@ -143,27 +129,6 @@ const ObjectInspector = createClass({
         return {};
       }
     };
-  },
-
-  componentWillReceiveProps(nextProps: NextProps) {
-    console.log("componentWillReceiveProps", nextProps)
-    const listItems = nextProps.listItems;
-    if (
-      listItems
-      && listItems !== this.props.listItems
-      && listItems.length > 0
-    ) {
-      this.expandListItems(listItems);
-    }
-
-    const highlightItems = nextProps.highlightItems;
-    if (
-      highlightItems
-      && highlightItems != this.props.highlightItems
-      && highlightItems.length > 0
-    ) {
-      this.highlightItem(highlightItems);
-    }
   },
 
   componentWillMount() {
@@ -193,6 +158,10 @@ const ObjectInspector = createClass({
   },
 
   getRoots: function() {
+    if (this.roots) {
+      return this.roots;
+    }
+
     let {
       desc,
       name,
@@ -204,10 +173,13 @@ const ObjectInspector = createClass({
       roots = [createNode(name, path || name, desc)];
     }
 
+    this.roots = roots;
+
     return roots;
   },
 
-  getParent: function() {
+  getParent: function(...args) {
+    console.log("getParent", ...args)
     return null;
   },
 
@@ -220,13 +192,14 @@ const ObjectInspector = createClass({
     const key = this.getKey(item);
 
     if (expand === true) {
-      if (expandedItems.has(key)) {
-        console.warn("Trying to expand already expanded", { key });
-        console.trace();
-        return;
-      }
       expandedItems.add(key);
+    } else {
+      expandedItems.delete(key);
+    }
 
+    this.setState({expandedItems});
+
+    if (expand === true) {
       const {
         getObjectProperties,
         loadObjectProperties,
@@ -237,42 +210,6 @@ const ObjectInspector = createClass({
         && (item.contents.value && !getObjectProperties(item.contents.value.actor))
       ) {
         loadObjectProperties(item.contents.value);
-      }
-    } else {
-      expandedItems.delete(key);
-    }
-
-    this.setState({ expandedItems });
-  },
-
-  expandListItems(listItems: Array<TreeItem>) {
-    const {expandedItems} = this.state;
-    listItems.forEach(item => expandedItems.add(this.props.getKey(item)));
-    this.focusItem(listItems[0]);
-    this.setState({ expandedItems });
-  },
-
-  highlightItem(highlightItems: Array<TreeItem>) {
-    if (!highlightItems || highlightItems.length === 0) {
-      return;
-    }
-
-    const expandedItems = this.state.expandedItems;
-    const { getKey } = this;
-
-    let firstHighlighItem = highlightItems[0];
-    // If the first item is expanded, focus it.
-    if (expandedItems.has(getKey(firstHighlighItem))) {
-      this.focusItem(firstHighlighItem);
-    } else {
-      // Otherwise, look at items starting from the top-level until finds a
-      // collapsed item and focus it.
-      const item = highlightItems
-        .reverse()
-        .find(x => !expandedItems.has(getKey(x)));
-
-      if (item) {
-        this.focusItem(item);
       }
     }
   },
@@ -289,33 +226,14 @@ const ObjectInspector = createClass({
     }
   },
 
-  renderItem(
+  renderTreeItem(
     item: ObjectInspectorItem,
     depth: number,
     focused: boolean,
     arrow: Object,
     expanded: boolean
   ) {
-
-    const {
-      mode = MODE.TINY,
-    } = this.props;
-
-    let objectValue;
-    if (nodeIsOptimizedOut(item)) {
-      objectValue = dom.span({ className: "unavailable" }, "(optimized away)");
-    } else if (nodeIsMissingArguments(item)) {
-      objectValue = dom.span({ className: "unavailable" }, "(unavailable)");
-    } else if (nodeHasProperties(item) || nodeIsPrimitive(item)) {
-      const object = item.contents.value;
-      objectValue = Rep(Object.assign({},
-        this.props,
-        {
-          mode,
-          object
-        }
-      ));
-    }
+    let objectValue = this.renderGrip(item, this.props.mode);
 
     return dom.div(
       {
@@ -324,13 +242,11 @@ const ObjectInspector = createClass({
           "default-property": isDefault(item)
         }),
         style: { marginLeft: depth * 15 },
-        onClick: nodeIsPrimitive(item) === false
-          ? e => {
-            e.stopPropagation();
-            this.setExpanded(item, !expanded);
-          }
-          : null,
-        onDoubleClick: nodeIsPrimitive(item) === false && this.props.onDoubleClick
+        onClick: e => {
+          e.stopPropagation();
+          this.setExpanded(item, !expanded);
+        },
+        onDoubleClick: this.props.onDoubleClick
           ? e => {
             e.stopPropagation();
             this.props.onDoubleClick(item, {
@@ -341,8 +257,7 @@ const ObjectInspector = createClass({
       },
       Svg("arrow", {
         className: classnames({
-          expanded: expanded,
-          hidden: nodeIsPrimitive(item)
+          expanded: expanded
         })
       }),
       item.name
@@ -371,6 +286,29 @@ const ObjectInspector = createClass({
     );
   },
 
+  renderGrip(item: ObjectInspectorItem, mode = MODE.TINY) {
+    if (nodeIsOptimizedOut(item)) {
+      return dom.span({ className: "unavailable" }, "(optimized away)");
+    }
+
+    if (nodeIsMissingArguments(item)) {
+      return dom.span({ className: "unavailable" }, "(unavailable)");
+    }
+
+    if (nodeHasProperties(item) || nodeIsPrimitive(item)) {
+      const object = item.contents.value;
+      return Rep(Object.assign({},
+        this.props,
+        {
+          mode,
+          object
+        }
+      ));
+    }
+
+    return null;
+  },
+
   render() {
     const {
       expandedItems,
@@ -382,6 +320,7 @@ const ObjectInspector = createClass({
       autoExpandAll,
       disabledFocus,
       itemHeight,
+      mode,
     } = this.props;
 
     return Tree({
@@ -402,7 +341,7 @@ const ObjectInspector = createClass({
       onCollapse: item => this.setExpanded(item, false),
       onFocus: this.focusItem,
 
-      renderItem: this.renderItem
+      renderItem: this.renderTreeItem
     });
   }
 });
